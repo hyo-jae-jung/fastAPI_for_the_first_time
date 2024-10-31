@@ -45,3 +45,8 @@ Header 클래스를 사용해서 Request Header에 값을 추가 할 수도 있�
 Response 클래스를 이용해서 Response Header에 값을 추가 할 수 있다.  
 아직 출력하는 방법은 모르며, Request Header와 동일하게 만들어봤지만 오류가 난다. Request Header가 나 자신인 서버가 만드는 값이라 출력의 필요성이 없어서 그런가??  
 
+
+jsonable_encoder로 json으로 변환이 안되는 데이터 구조를 json과 비슷한 파이썬 데이터구조로 변환 후, json.dumps()로 변환 가능하도록 변환  
+
+response_model로 출력하는 정보를 제한 할 수 있다.  
+
