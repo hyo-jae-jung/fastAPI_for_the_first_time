@@ -1,15 +1,10 @@
-from fastapi import FastAPI, Response, Header
+from fastapi import FastAPI, Body
 
 app = FastAPI()
 
-@app.get("/agent")
-def greet1(user_agent: str = Header()):
-    return user_agent
-
-@app.get("/header/{name}/{value}")
-def greet(name: str, value: str, response: Response):
-    response.headers[name] = value
-    return "normal body"
+@app.post("/hi")
+def greet(who: str = Body(embed=True)):
+    return f"Hello? {who}?"
 
 if __name__ == "__main__":
     import uvicorn

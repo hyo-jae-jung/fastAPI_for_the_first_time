@@ -50,3 +50,23 @@ jsonable_encoder로 json으로 변환이 안되는 데이터 구조를 json과 �
 
 response_model로 출력하는 정보를 제한 할 수 있다.  
 
+[자동 문서화]
+http://localhost:8000/docs  
+
+
+# Starlette과 비동기, 동시성
+
+[async, await, asyncio]  
+
+# Pydantic과 타입 힌트, 모델
+
+파이썬에서도 타입 힌트를 사용 할 수 있지만 다른 언어처럼 오류로 처리하지 않는다.  
+mypy로 타입 불일치 시 경고를 표시 할 수 있다.  
+
+데이터그룹화를 위한 다양한 도구가 있지만 FastAPI에서 Pydantic을 사용하기 좋아서 사용  
+
+# 의존성
+
+
+# Web
+
