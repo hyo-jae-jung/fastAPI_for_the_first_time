@@ -3,7 +3,7 @@ import pytest
 from fastapi.encoders import jsonable_encoder  
 import json  
 
-@pytest.fixture 
+@pytest.fixture
 def data():
     return datetime.datetime.now() 
 
