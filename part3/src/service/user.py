@@ -47,3 +47,35 @@ def lookup_user(username: str, is_public=True) -> PublicUser | PrivateUser | Non
     if (user := data.get_one(username, is_public=is_public)):
         return user 
     return None
+
+def auth_user(name: str, plain: str) -> PublicUser | PrivateUser | None:
+    if not (user := lookup_user(name, is_public=False)):
+        return None 
+    if not verify_password(plain, user.hash):
+        return None 
+    return user 
+
+def create_access_token(data: dict, expires: timedelta | None=None):
+    src = data.copy()
+    now = datetime.utcnow()
+    if not expires:
+        expires = timedelta(minutes=15)
+        src.update({"exp":now + expires})
+        encoded_jwt = jwt.encode(src, SECRET_KEY, algorithm=ALGORITHM)
+        return encoded_jwt
+    
+def get_all() -> list[PublicUser]:
+    return data.get_all()
+
+def get_one(name) -> PublicUser:
+    return data.get_one(name)
+
+def create(sign_in_user: SignInUser) -> PublicUser:
+    user = PrivateUser(name=sign_in_user.name, hash=get_hash(sign_in_user.password))
+    return data.create(user)
+
+def modify(name: str, user: PublicUser) -> PublicUser:
+    return data.modify(name, user)
+
+def delete(name: str) -> None:
+    return data.delete(name)
