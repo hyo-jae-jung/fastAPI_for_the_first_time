@@ -16,7 +16,7 @@ def find(name: str) -> PublicUser | None:
     return None 
 
 def check_missing(name: str):
-    if find(name):
+    if not find(name):
         raise Missing(msg=f"Missing user {name}")
     
 def check_duplicate(name: str):
@@ -41,3 +41,8 @@ def modify(name: str, user: PublicUser) -> PublicUser:
 def delete(name: str) -> None:
     check_missing(name)
     return None
+
+
+if __name__ =="__main__":
+    print(fakes[0].name)
+    get_one(fakes[0].name)

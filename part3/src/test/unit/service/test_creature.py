@@ -20,7 +20,7 @@ def test_get_exists():
     resp = code.get_one("Yeti")
     assert resp == sample  
 
-def test_get_missing():
+def test_get_missing(): # 10장 기준 실패하지만 이후 수정 예정
     resp = code.get_one("boxturtle")
     assert resp is None
     

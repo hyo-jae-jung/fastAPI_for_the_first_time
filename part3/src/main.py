@@ -1,5 +1,5 @@
 from fastapi import FastAPI  
-from web import creature, explorer
+from web import creature, explorer, user
 
 app = FastAPI()
 
@@ -9,6 +9,7 @@ def top():
 
 app.include_router(explorer.router)
 app.include_router(creature.router)
+app.include_router(user.router)
 
 if __name__ == "__main__":
     import uvicorn  
