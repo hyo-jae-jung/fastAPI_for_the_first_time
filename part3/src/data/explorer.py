@@ -52,6 +52,22 @@ def modify(name: str, explorer: Explorer) -> Explorer:
              description=:description
              where name=:name_orig"""
     params = model_to_dict(explorer)
+    params["name_orig"] = name 
+    curs.execute(qry, params)
+    if curs.rowcount == 1:
+        return get_one(explorer.name)
+    else:
+        raise Missing(msg=f"Explorer {name} not found")
+
+def replace(name: str, explorer: Explorer) -> Explorer:
+    if not (name and explorer):
+        return None
+    qry = """update explorer
+             set country=:country,
+             name=:name,
+             description=:description
+             where name=:name_orig"""
+    params = model_to_dict(explorer)
     params["name_orig"] = explorer.name 
     curs.execute(qry, params)
     if curs.rowcount == 1:

@@ -3,6 +3,7 @@ from jose import jwt
 # 대칭키 HS256
 key = "secret"
 encoded = jwt.encode({"some": "payload"}, key, algorithm="HS256")
+print(encoded)
 print(jwt.decode(encoded, key, algorithms="HS256"))
 
 

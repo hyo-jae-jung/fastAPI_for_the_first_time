@@ -60,10 +60,10 @@ def create_access_token(data: dict, expires: timedelta | None=None):
     now = datetime.utcnow()
     if not expires:
         expires = timedelta(minutes=15)
-        src.update({"exp":now + expires})
-        encoded_jwt = jwt.encode(src, SECRET_KEY, algorithm=ALGORITHM)
-        return encoded_jwt
-    
+    src.update({"exp":now + expires})
+    encoded_jwt = jwt.encode(src, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
 def get_all() -> list[PublicUser]:
     return data.get_all()
 

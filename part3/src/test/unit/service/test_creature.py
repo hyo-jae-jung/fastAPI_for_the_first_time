@@ -1,26 +1,47 @@
 import sys
 sys.path.append('/mnt/c/Users/hyoja/OneDrive/문서/GitHub/fastAPI_for_the_first_time/part3/src')
 
+import os 
+os.environ["CRYPTID_UNIT_TEST"] = "true"
+import pytest 
+
 from model.creature import Creature  
-from service import creature as code  
+from error import Missing, Duplicate
+from data import creature as data 
 
-sample = Creature(
-    name="Yeti",
-    country="CN",
-    area="Himalayas",
-    description="Hirsute Himalayan",
-    aka="Abominable Snowman"
-)
+@pytest.fixture
+def sample() -> Creature:
+    return Creature(
+        name="Yeti",
+        aka="Abominable Snowman",
+        country="CN",
+        area="Himalayas",
+        description="Handsome Himalayan",
+        )
 
-def test_create():
-    resp = code.create(sample)
+def test_create(sample):
+    resp = data.create(sample)
     assert resp == sample 
 
-def test_get_exists():
-    resp = code.get_one("Yeti")
-    assert resp == sample  
+def test_create_duplicate(sample):
+    with pytest.raises(Duplicate):
+        _ = data.create(sample)
 
-def test_get_missing(): # 10장 기준 실패하지만 이후 수정 예정
-    resp = code.get_one("boxturtle")
-    assert resp is None
-    
+def test_get_exists(sample): 
+    resp = data.get_one(sample.name) 
+    assert resp == sample 
+
+def test_get_missing():
+    with pytest.raises(Missing):
+        _ = data.get_one("boxturtle")
+
+def test_modify(sample):
+    sample.country = "CA" # Canada!
+    resp = data.modify(sample.name, sample)
+    assert resp == sample 
+
+def test_modify_missing():
+    bob: Creature = Creature(name="bob", country="US", area="*",
+         description="some guy", aka="??")
+    with pytest.raises(Missing):
+        _ = data.modify(bob.name, bob)

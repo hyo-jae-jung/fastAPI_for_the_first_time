@@ -1,9 +1,12 @@
 import sys
 sys.path.append('/mnt/c/Users/hyoja/OneDrive/문서/GitHub/fastAPI_for_the_first_time/part3/src')
-
+import os 
 from fastapi import APIRouter, HTTPException
 from model.creature import Creature  
-import service.creature as service 
+if os.getenv("CRYPTID_UNIT_TEST"):
+    from fake import creature as service
+else:
+    from service import creature as service 
 from error import Duplicate, Missing
 
 router = APIRouter(prefix = "/creature")
@@ -27,11 +30,11 @@ def create(creature: Creature) -> Creature:
     try:
         return service.create(creature)
     except Duplicate as exc:
-        raise HTTPException(status_code=404, detail=exc.msg)
+        raise HTTPException(status_code=409, detail=exc.msg)
 
 @router.patch("/{name}")
 @router.patch("/{name}/")
-def modify(name, creature: Creature) -> Creature:
+def modify(name: str, creature: Creature) -> Creature:
     try:
         return service.modify(name, creature)
     except Missing as exc:

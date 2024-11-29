@@ -15,7 +15,6 @@ from error import Missing, Duplicate
 def sample_sign_in() -> SignInUser:
     return SignInUser(name="Pa Tuohy", password="...")
 
-
 @pytest.fixture
 def sample_public() -> PublicUser:
     return PublicUser(name="Bob")
@@ -40,13 +39,11 @@ def test_create(sample_sign_in):
     public_user = PublicUser(name=sample_sign_in.name)
     assert user.create(sample_sign_in) == public_user
 
-
 def test_create_duplicate(fakes):
     with pytest.raises(Exception) as exc:
         sign_in_user = SignInUser(name=fakes[0].name, password="...")
         resp = user.create(sign_in_user)
         assert_duplicate(exc)
-
 
 def test_get_one(fakes):
     assert user.get_one(fakes[0].name) == fakes[0]

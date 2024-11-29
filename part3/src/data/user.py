@@ -69,7 +69,7 @@ def modify(name: str, user: PublicUser) -> PublicUser:
     
 def delete(name: str) -> None:
     user = get_one(name, is_public=False)
-    qry = "delete from user where name =: name"
+    qry = "delete from user where name = :name"
     params = {"name":name}
     curs.execute(qry, params)
     if curs.rowcount != 1:
